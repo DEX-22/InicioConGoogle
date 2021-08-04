@@ -1,0 +1,175 @@
+<html lang="en">
+  <head>
+    <meta name="google-signin-scope" content="profile email">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="759458411528-on2dqa8b1era2ork8vbuqs8q78datruj.apps.googleusercontent.com">  
+    <style>
+        body{
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: space-evenly;
+            background-color: #045E48;
+        }
+
+        .contenedor{
+            width: 1200px;
+            height: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 100px;
+            background-color: #10AC84;
+        }
+        h2{
+            color: #5E1700;
+            font-size: 40px;
+        }
+        h3{
+            color: #8B1500;
+            text-align: left;
+            font-size: 30px;
+        }
+        h4{
+            color: #AB350F;
+            text-align: right;
+            font-size: 25px;
+        }
+        #botonLog{
+            margin-top: 10px;
+            padding-left: 540px;
+        }
+        #usuario > ul{
+            list-style: none;
+            
+        }
+        #usuario > ul > li{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 20pt;
+            
+        }
+        #usuario{
+            margin-left: 2%;
+            width: 1000px;
+            height: 400px;
+            display: flex;
+            flex-direction:row;
+            justify-content: space-evenly;
+        }
+        #derecha{
+            width: 450px;
+            height: auto;
+        }
+        #derecha > *{
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+        img{
+            padding: 0;
+            width: 200px;
+            height: auto;
+        }
+        #izquierda{
+            width: 400px;
+
+        }
+        
+        #izquierda > * {
+            margin-left: 50px;
+            margin-right: 50px;
+            max-width: 475px;
+        }
+        #inicioS{
+            align-self: center;
+        }
+        #titulo{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+    </style>
+
+
+</head>
+  <body>
+    <div class="contenedor">
+
+        <div id="titulo">
+            <h2>WELCOME TO THE PARTY</h2> <a href="#" onclick="signOut();">Sign out</a>
+        </div>
+
+<div id="botonLog"> <div id="inicioS" class="g-signin2" data-onsuccess="onSignIn" ></div> </div>      
+
+            <div id="usuario">
+                <div id='derecha'> <img alt='Imagen de perfil' id='ImgPerfil'></div>
+                <div id='izquierda'>
+               
+               <h3> NOMBRE:</h3> <h4 id='Nombre'></h4>
+               <h3> EMAIL: </h3> <h4 id='Email'></h4>
+                </div>
+            </div>
+    </div>
+
+    
+
+    <script>
+
+        let Nombre = '';
+        let Email = '';
+        let ImgUrl = '';
+        let TokenOauth = '';
+
+
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        Nombre = profile.getName();
+         Email = profile.getEmail();
+         ImgUrl = profile.getImageUrl();
+
+     
+   
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        TokenOauth = id_token;
+        console.log("ID Token: " + id_token);
+        alert("Bienvenido "+Nombre);
+        colocar();
+        }
+
+       function colocar(){
+        let caja = document.querySelector('#usuario');
+        let tokenUsuario = document.querySelector('#Token');
+        let nombreUsuario = document.querySelector('#Nombre');
+        let emailUsuario = document.querySelector('#Email');
+        let imgPerfil = document.querySelector('#ImgPerfil');
+       // tokenUsuario.innerHTML = TokenOauth;
+        nombreUsuario.innerHTML = Nombre;
+        emailUsuario.innerHTML = Email;
+        imgPerfil.src = ImgUrl;
+
+        
+        
+       }
+      
+
+
+    </script>
+    
+    <script>
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          Nombre = '';
+          Email = '';
+          ImgUrl = '';
+          colocar();
+            console.log('User signed out.');
+
+        });
+      }
+    </script>
+  
+  </body>
+</html>
